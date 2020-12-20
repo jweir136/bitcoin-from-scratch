@@ -146,6 +146,15 @@ G = S256Point(
     0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8
 )
 
+class Signature:
+    
+    def __init__(self, r, s):
+        self.r = r
+        self.s = s
+
+    def __repr__(self):
+        return 'Signature({:x}, {:x})'.format(self.r, self.s)
+
 class ECCTest():
     
     def test_on_curve(self):
