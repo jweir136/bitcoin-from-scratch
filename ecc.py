@@ -126,6 +126,7 @@ class S256Field(FieldElement):
 
 A = 0
 B = 7
+N = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
 
 class S256Point(Point):
 
@@ -135,6 +136,10 @@ class S256Point(Point):
             super().__init__(x=S256Field(x), y=S256Field(y), a=a, b=b)
         else:
             super().__init__(x=x, y=y, a=a, b=b)
+
+    def __rmul__(self, coef):
+        coef = coef % N
+        return super().__rmul__(coef)
 
 class ECCTest():
     
