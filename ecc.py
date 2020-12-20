@@ -69,3 +69,6 @@ class Point:
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y and self.a == other.a and self.b == other.b
+
+    def __ne__(self, other):
+        return self.x != other.x and self.y != other.y and self.y != other.a and self.b != other.b
