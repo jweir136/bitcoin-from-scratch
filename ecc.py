@@ -103,6 +103,17 @@ class Point:
         if self == other and self.y == 0 * self.x:
             return self.__class__(None, None, self.a, self.b)
 
+    def __rmul__(self, coef):
+        coef = coef
+        current = self
+        result = self.__class__(None, None, self.a, self.b)
+        while coef:
+            if coef & 1:
+                result += current
+            current += current
+            coef >>= 1
+        return result
+
 class ECCTest():
     
     def test_on_curve(self):
@@ -114,6 +125,6 @@ class ECCTest():
             x = FieldElement(x_raw, prime)
             y = FieldElement(y_raw, prime)
             Point(x, y, a, b)
-            
+
     def test(self):
         self.test_on_curve()
