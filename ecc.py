@@ -47,3 +47,11 @@ class FieldElement:
         n = exp % (self.prime - 1)
         num = pow(self.num, n, self.prime)
         return self.__class__(num, self.prime)
+
+    def __truediv__(self, other):
+        if other is None:
+            raise ValueError("Given FieldElement cannot be None")
+        if self.prime != other.prime:
+            raise ValueError("FieldElements must have same prime")
+        num = self.num * pow(other.num, self.prime - 2, self.prime) % self.prime
+        return self.__class__(num, self.prime)
