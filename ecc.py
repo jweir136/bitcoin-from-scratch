@@ -1,4 +1,4 @@
-from unittest import TestCase
+import random
 
 class FieldElement:
 
@@ -170,6 +170,15 @@ class PrivateKey:
 
     def hex(self):
         return '{:x}'.format(self.secret).zfill(64)
+
+    def sign(self, z):
+        k = random.randint(0, N)
+        r = (k*G).x.num
+        k_inv = pow(k, N-2, N)
+        s = (z + r*self.secret) * k_inv % N
+        if s > N/2:
+            s = N - s
+        return Signature(r, s)
 
 class ECCTest():
     
