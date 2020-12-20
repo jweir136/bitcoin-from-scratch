@@ -42,3 +42,8 @@ class FieldElement:
             raise ValueError("FieldElements must have same prime")
         num = (self.num * other.num) & self.prime
         return self.__class__(num, self.prime)
+
+    def __pow__(self, exp):
+        n = exp % (self.prime - 1)
+        num = pow(self.num, n, self.prime)
+        return self.__class__(num, self.prime)
