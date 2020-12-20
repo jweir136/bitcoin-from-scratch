@@ -124,6 +124,18 @@ class S256Field(FieldElement):
     def __repr__(self):
         return "{:x}".format(self.num).zfill(64)
 
+A = 0
+B = 7
+
+class S256Point(Point):
+
+    def __init__(self, x, y, a=None, b=None):
+        a, b = S256Field(A), S256Field(B)
+        if type(x) == int:
+            super().__init__(x=S256Field(x), y=S256Field(y), a=a, b=b)
+        else:
+            super().__init__(x=x, y=y, a=a, b=b)
+
 class ECCTest():
     
     def test_on_curve(self):
