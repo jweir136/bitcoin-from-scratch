@@ -34,3 +34,11 @@ class FieldElement:
             raise ValueError("FieldElements must have same prime")
         num = (self.num - other.num) % self.prime  
         return self.__class__(num, self.prime)  
+
+    def __mul__(self, other):
+        if other is None:
+            raise ValueError("Given FieldElement cannot be None")
+        if self.prime != other.prime:
+            raise ValueError("FieldElements must have same prime")
+        num = (self.num * other.num) & self.prime
+        return self.__class__(num, self.prime)
