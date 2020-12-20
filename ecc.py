@@ -162,6 +162,15 @@ class Signature:
     def __repr__(self):
         return 'Signature({:x}, {:x})'.format(self.r, self.s)
 
+class PrivateKey:
+
+    def __init__(self, secret):
+        self.secret = secret
+        self.point = secret * G
+
+    def hex(self):
+        return '{:x}'.format(self.secret).zfill(64)
+
 class ECCTest():
     
     def test_on_curve(self):
