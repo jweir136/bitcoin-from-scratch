@@ -85,3 +85,9 @@ class Point:
 
         if self.x == other.x and self.y != other.y:
             return self.__class__(None, None, self.a, self.b)
+
+        if self.x != other.x:
+            s = (other.y - self.y) / (other.x - self.x)
+            x = s**2 - self.x - other.x
+            y = s * (self.x - x) - self.y
+            return self.__class__(x, y, self.a, self.b)
