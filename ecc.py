@@ -1,4 +1,5 @@
 import random
+import hashlib
 
 class FieldElement:
 
@@ -124,6 +125,9 @@ class S256Field(FieldElement):
     def __repr__(self):
         return "{:x}".format(self.num).zfill(64)
 
+def hash160(s):
+    return hashlib.new('ripemd160', hashlib.sha256(s).digest(s).digest()).digest()
+
 A = 0
 B = 7
 N = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
@@ -156,6 +160,17 @@ class S256Point(Point):
                 return b'\x03' + self.x.num.to_bytes(32, 'big')
         else:      
             return b'\x04' + self.x.num.to_bytes(32, 'big') + self.y.num.to_bytes(32, 'big')
+
+    def hash160(self, compressed=True):
+        return hash160(self.sec(compressed))
+
+    def address(self, compressed=True, testnet=False):
+        h160 = self.hash160(compressed)
+        if testnet:
+            prefix = b'\x6f'
+        else:
+            prefix = b'\x00'
+        return encode_base58(prefix + h160)
 
     def sqrt(self):
         return self**((P+1)//4)
